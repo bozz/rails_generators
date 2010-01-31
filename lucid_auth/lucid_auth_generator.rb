@@ -6,7 +6,7 @@ class LucidAuthGenerator < Rails::Generator::Base
     super
     
     @user_name = @args[0] || 'user'
-    @session_name = @args[1] || (options[:authlogic] ? @user_name + '_session' : 'session')
+    @session_name = @args[1] || @user_name + '_session'
   end
   
   def manifest
@@ -19,7 +19,7 @@ class LucidAuthGenerator < Rails::Generator::Base
       
       m.directory "app/views/#{user_plural_name}"
       m.template "user.rb", "app/models/#{user_singular_name}.rb"
-      m.template "authlogic_session.rb", "app/models/#{user_singular_name}_session.rb" if options[:authlogic]
+      m.template "authlogic_session.rb", "app/models/#{session_singular_name}.rb"
       m.template "users_controller.rb", "app/controllers/#{user_plural_name}_controller.rb"
       m.template "users_helper.rb", "app/helpers/#{user_plural_name}_helper.rb"
       m.template "views/signup.html.erb", "app/views/#{user_plural_name}/new.html.erb"
